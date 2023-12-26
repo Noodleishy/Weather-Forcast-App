@@ -17,6 +17,8 @@ function refreshWeather(response) {
   humidityElement.innerHTML = `${response.data.temperature.humidity}%`;
   windSpeedElement.innerHTML = `${response.data.wind.speed} km/hr`;
   temperatureElement.innerHTML = Math.round(newTemperature);
+
+  getForecast(response.data.city);
 }
 function formatDate(date) {
   let minutes = date.getMinutes();
@@ -52,7 +54,15 @@ function handleSearchSubmit(event) {
   searchCity(searchInput.value);
 }
 
-function displayForcast() {
+function getForecast(city) {
+  let apiKey = "6f96419t05793ebo1ab9eb5033f5f00f";
+  let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=imperial`;
+  axios(apiUrl).then(displayForcast);
+}
+
+function displayForcast(response) {
+  console.log(response.data);
+
   let days = [
     "Sunday",
     "Monday",
@@ -69,7 +79,8 @@ function displayForcast() {
       forecastHtml +
       `
       <div class="weather-forcast-day">
-        <div class="weather-forecast-date">${day}</div>
+        <div class="weather-forecast
+        -date">${day}</div>
         <div class="weather-forecast-icon"></div>
         <div class="weather-forecast-temperatures">
           <span class="weather-forecast-temperature-max"> 18ºF </span>
@@ -87,4 +98,3 @@ let searchFormElement = document.querySelector("#search-form");
 searchFormElement.addEventListener("submit", handleSearchSubmit);
 
 searchCity("West Lafayette");
-displayForcast();
