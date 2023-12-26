@@ -52,7 +52,39 @@ function handleSearchSubmit(event) {
   searchCity(searchInput.value);
 }
 
+function displayForcast() {
+  let days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  let forecastHtml = "";
+
+  days.forEach(function (day) {
+    forecastHtml =
+      forecastHtml +
+      `
+      <div class="weather-forcast-day">
+        <div class="weather-forecast-date">${day}</div>
+        <div class="weather-forecast-icon"></div>
+        <div class="weather-forecast-temperatures">
+          <span class="weather-forecast-temperature-max"> 18ºF </span>
+          <span class="weather-forecast-temperature-min">12ºF</span>
+        </div>
+      </div>
+    `;
+  });
+
+  let forecastElement = document.querySelector("#forecast");
+  forecastElement.innerHTML = forecastHtml;
+}
+
 let searchFormElement = document.querySelector("#search-form");
 searchFormElement.addEventListener("submit", handleSearchSubmit);
 
 searchCity("West Lafayette");
+displayForcast();
